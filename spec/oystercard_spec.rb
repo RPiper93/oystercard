@@ -22,4 +22,12 @@ describe Oystercard do
     end
   end
 
+  describe '#deduct' do
+    it 'can deduct fare' do
+      oystercard.top_up(50)
+      oystercard.deduct(25)
+      expect(oystercard.balance).to eq 25
+    end
+  end
+
 end
