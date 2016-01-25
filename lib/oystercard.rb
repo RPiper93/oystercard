@@ -1,6 +1,7 @@
 class Oystercard
   attr_reader :balance
   MAX = 90
+  MIN = 1
 
   def initialize
     @balance = 0
@@ -21,6 +22,7 @@ class Oystercard
   end
 
   def touch_in
+    raise "Under value - Additional fare due" if minimum?
     @travelling = true
   end
 
@@ -32,6 +34,10 @@ class Oystercard
 
   def maxed?(value)
     @balance + value > MAX
+  end
+
+  def minimum?
+    @balance < MIN
   end
 
 end

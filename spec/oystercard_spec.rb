@@ -37,11 +37,17 @@ describe Oystercard do
   describe '#touch in/#touch out' do
 
     before do
+      oystercard.top_up(5)
       oystercard.touch_in
     end
 
     it 'can touch in' do
       expect(oystercard).to be_in_journey
+    end
+
+    it "can't touch in with balance less than £1" do
+      oystercard.deduct(5)
+      expect {oystercard.touch_in}.to raise_error "Under value - Additional fare due"
     end
 
     it 'can touch out' do
