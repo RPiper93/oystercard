@@ -1,0 +1,6 @@
+NameError (uninitialized constant)
+~/Projects/oystercard/spec/oystercard_spec.rb
+Line 1
+
+This error is raised when a given name is invalid or undefined.
+We can solve this error by creating a constant/class with the given name and link it to the rspec file.
