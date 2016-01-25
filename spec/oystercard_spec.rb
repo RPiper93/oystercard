@@ -7,6 +7,10 @@ describe Oystercard do
     it "starts with balance 0" do
       expect(oystercard.balance).to eq 0
     end
+
+    it "doesn't start in journey" do
+      expect(oystercard).to_not be_in_journey
+    end
   end
 
   describe '#top_up' do

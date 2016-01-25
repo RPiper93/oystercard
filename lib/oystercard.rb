@@ -6,6 +6,9 @@ class Oystercard
     @balance = 0
   end
 
+  def in_journey?
+  end
+
   def top_up(value)
     raise "Maximum balance: #{MAX} reached" if maxed?(value)
     @balance += value
