@@ -35,10 +35,20 @@ describe Oystercard do
   end
 
   describe '#touch in/#touch out' do
-    it 'can touch in' do
+
+    before do
       oystercard.touch_in
+    end
+
+    it 'can touch in' do
       expect(oystercard).to be_in_journey
     end
+
+    it 'can touch out' do
+      oystercard.touch_out
+      expect(oystercard).to_not be_in_journey
+    end
+
   end
 
 end
