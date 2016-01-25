@@ -17,10 +17,6 @@ class Oystercard
     @balance += value
   end
 
-  def deduct(fare)
-    @balance -= fare
-  end
-
   def touch_in
     raise "Under value - Additional fare due" if minimum?
     @travelling = true
@@ -28,6 +24,7 @@ class Oystercard
 
   def touch_out
     @travelling = false
+    deduct(MIN)
   end
 
   private
@@ -38,6 +35,10 @@ class Oystercard
 
   def minimum?
     @balance < MIN
+  end
+
+  def deduct(fare)
+    @balance -= fare
   end
 
 end
