@@ -12,7 +12,6 @@ describe 'User stories' do
   let(:oystercard) {OysterCard.new}
   it 'shows all previous trips' do
     oystercard = OysterCard.new
-    oystercard.top_up(20)
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
     expect(oystercard.full_history).to eq ({oystercard.time=>[station, station2]})
@@ -20,7 +19,6 @@ describe 'User stories' do
 
   it 'doesn\'t change history when you touch out without touching in'do
     oystercard = OysterCard.new
-    oystercard.top_up(30)
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
     oystercard.touch_out(station3)
@@ -42,7 +40,6 @@ describe 'User stories' do
 #   I need a penalty charge deducted if I fail to touch in or out
 
   it 'deducts a penalty charge if user fails to touch in or out' do
-    oystercard.top_up(50)
     oystercard.touch_in(station)
     expect {oystercard.touch_in(station)}.to change{oystercard.balance}.by(-6)
   end

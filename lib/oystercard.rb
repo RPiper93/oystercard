@@ -3,11 +3,12 @@ require_relative 'journey.rb'
 class OysterCard
   LIMIT = 50
   MINIMUM = 1
-  
+  INITIAL_BALANCE = 30
+
   attr_reader :balance, :full_history
 
   def initialize
-    @balance = 0
+    @balance = INITIAL_BALANCE
     @full_history = {}
     @journey =  Journey.new
   end
@@ -34,48 +35,48 @@ class OysterCard
     end_journey
     create_journey
   end
-  
+
   def time
     @time = Time.now
     @journey_time = @time.strftime("Journey date and time: %d/%m/%y  %H:%M:%S")
   end
-  
+
   private
-  
+
   def fare
     @journey.fare
   end
-  
+
   def maximum(value)
     @balance + value > LIMIT
   end
 
   def minimum
-    @balance <= MINIMUM
+    @balance < MINIMUM
   end
 
   def deduct(value)
     @balance -= value
   end
-  
+
   def create_journey
     @journey = Journey.new
   end
-  
+
   def end_journey
     deduct(fare)
     write_history
   end
-  
+
   def write_history
     @full_history[@journey_time] = @journey.history_log
   end
-  
+
   def add_entry_station(station)
     @journey.entry_station = station
   end
-  
-  def add_exit_station(station)    
+
+  def add_exit_station(station)
     @journey.exit_station = station
   end
 end
