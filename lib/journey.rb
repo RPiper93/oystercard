@@ -10,13 +10,9 @@ def complete?
 
 end
 
-def history
+def history_log
   self.history = [self.entry_station, self.exit_station]
 
 end
 
 end
-
-
-
-

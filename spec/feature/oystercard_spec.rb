@@ -7,13 +7,24 @@ require 'journey'
 
 describe 'User stories' do
   let(:station) {Station.new("liverpool street", 1)}
+  let(:station2) { Station.new("Brighton", 10)}
+  let(:station3) { Station.new("Victoria", 1)}
   let(:oystercard) {OysterCard.new}
   it 'shows all previous trips' do
     oystercard = OysterCard.new
     oystercard.top_up(20)
     oystercard.touch_in(station)
-    oystercard.touch_out(station)
-    expect(oystercard.full_history).to eq ({oystercard.time=>[station, station]})
+    oystercard.touch_out(station2)
+    expect(oystercard.full_history).to eq ({oystercard.time=>[station, station2]})
+  end
+
+  it 'doesn\'t change history when you touch out without touching in'do
+    oystercard = OysterCard.new
+    oystercard.top_up(30)
+    oystercard.touch_in(station)
+    oystercard.touch_out(station2)
+    oystercard.touch_out(station3)
+    expect(oystercard.full_history).to eq ({oystercard.time=>[station, station2]})
   end
 
 #  In order to know how far I have travelled

@@ -23,6 +23,8 @@ describe OysterCard do
 
   describe 'journey' do
     let(:station) {double(:station)}
+    let(:station2) {double(:station2)}
+    let(:station3) {double(:station3)}
     before do
       oystercard.top_up(10)
     end
@@ -62,15 +64,34 @@ describe OysterCard do
       it 'records journey history' do
         oystercard.touch_in(station)
         oystercard.touch_out(station)
-
         expect(oystercard.full_history).to eq ({oystercard.time=>[station, station]})
       end
 
-      it 'deducts a penalty charge if user fails to touch in or out' do
+      it 'deducts a penalty charge if user fails to touch out' do
         oystercard.top_up(30)
         oystercard.touch_in(station)
         expect {oystercard.touch_in(station)}.to change{oystercard.balance}.by(-6)
       end
+      it 'deducts a penalty charge if user fails to touch in'do
+        oystercard.top_up(30)
+        expect {oystercard.touch_out(station)}.to change{oystercard.balance}.by(-16)
+
+      end
+      it 'deducts a penalty charge if user fails to touch in on second journey'do
+        oystercard.top_up(30)
+        oystercard.touch_in(station)
+        oystercard.touch_out(station2)
+        expect {oystercard.touch_out(station3)}.to change{oystercard.balance}.by(-16)
+      end
+      it 'doesn\'t change history when you touch out without touching in'do
+        oystercard.top_up(30)
+        oystercard.touch_in(station)
+        oystercard.touch_out(station2)
+        1000000.times{p "time wasting!"}
+        oystercard.touch_out(station3)
+        expect(oystercard.full_history).to eq ({oystercard.time=>[station, station2]})
+      end
+
     end
   end
 end
