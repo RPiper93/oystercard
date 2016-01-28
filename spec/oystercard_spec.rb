@@ -6,6 +6,7 @@ RSpec.describe Card do
 subject(:card) {described_class.new}  #enables you to replace subject with card (still creating new instance but easier to read)
 let(:entry_station) {double(:station)}
 let(:exit_station) {double(:station)}
+let(:journey) {double(:journey)}
 
 
 it 'creates a new card' do
