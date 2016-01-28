@@ -1,5 +1,8 @@
 class Journey
 
+  PENALTY = 6
+  MINIMUM_FARE = 1
+
   def initialize
     @current = {}
   end
@@ -22,4 +25,14 @@ class Journey
     @current != {}
   end
 
+  def fare
+   return PENALTY if penalty?
+   MINIMUM_FARE
+  end
+
+ private
+
+  def penalty?
+   @current.size == 1
+  end
 end

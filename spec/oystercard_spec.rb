@@ -39,15 +39,6 @@ context 'maximum limit' do
   end
 end
 
-context 'deducts' do
-
-  it { is_expected.to respond_to(:deduct).with(1).argument }
-
-  it 'deducts from balance' do
-    expect{card.deduct(1)}.to change{ card.balance }.by(-1)
-  end
-
-end
 
 context 'card in use' do
 
@@ -112,7 +103,16 @@ context 'record journeys' do
   expect(card.journey_history).to eq [journey]
   end
 
-end
+  it 'deducts penalty fare if you touch in twice' do
+    card.touch_in(entry_station)
+    expect{card.touch_in(entry_station)}.to change{card.balance}.by(-Journey::PENALTY)
+  end
+
+  it 'deducts penalty if you touch_out without touching in' do
+    expect{card.touch_out(exit_station)}.to change{card.balance}.by(-Journey::PENALTY)
+  end
+
+ end
 end
 
 

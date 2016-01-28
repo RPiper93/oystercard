@@ -2,8 +2,10 @@ require 'journey.rb'
 
 class Card
 
+
 MINIMUM_LIMIT = 1
 MAXIMUM_LIMIT = 90
+
 
 	attr_reader :balance, :journey_history
 
@@ -19,27 +21,35 @@ MAXIMUM_LIMIT = 90
 		@balance += amount
 	end
 
-  def deduct(amount)
-    @balance -= amount
-  end
+
 
   def touch_in(station)
+    if in_journey? 
+       deduct(@current_journey.fare) 
+       save
+    end
     raise 'Insufficient money on your card!' if min? #haven't touched in current_journey.new? true if current_journey == {}
     @current_journey.start(station)
   end
 
   def touch_out(station)
     @current_journey.end(station)
-    save #if you've touched in and out - current_journey.complete? true if [:entry_station]
+    save 
+    deduct(@current_journey.fare)
     @current_journey.reset
-    @balance -= MINIMUM_LIMIT
-  end
+   end
 
   def in_journey?
     @current_journey.travelling?
   end
 
+
+
   private
+
+  def deduct(amount)
+    @balance -= amount
+  end
 
   def save
     @journey_history << @current_journey.current

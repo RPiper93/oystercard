@@ -31,5 +31,28 @@ describe Journey do
     journey.start(station)
     expect(journey).to be_travelling
   end
+  
+  describe '#fare' do
+    it 'penalty when only one station' do
+      journey.start(station)
+      expect(journey.fare).to eq(Journey::PENALTY)
+    end
+    it 'minimum fare if complete journey' do
+      journey.start(station)
+      journey.end(station)
+      expect(journey.fare).to eq(Journey::MINIMUM_FARE)
+    end
+  end
 
 end
+
+
+
+
+
+
+
+
+
+
+
