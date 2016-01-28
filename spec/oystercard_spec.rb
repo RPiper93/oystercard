@@ -35,30 +35,13 @@ describe OysterCard do
         oystercard.touch_out(station)
         expect{oystercard.touch_in(station)}.to raise_error "Insufficient balance #{OysterCard::MINIMUM}"
       end
-
-      it 'has entry station' do
-        oystercard.touch_in(station)
-        expect(oystercard.history).to eq [station, nil]
-      end
     end
 
     context 'touch_out' do
 
-      it 'taps-out' do
-        oystercard.touch_in(station)
-        oystercard.touch_out(station)
-        expect(oystercard.history).to eq [station, station]
-      end
-
       it 'charges on touch_out' do
         oystercard.touch_in(station)
         expect{oystercard.touch_out(station)}.to change{oystercard.balance}.by(-10)
-      end
-
-      it 'remembers exit station' do
-        oystercard.touch_in(station)
-        oystercard.touch_out(station)
-        expect(oystercard.history).to eq [station, station]
       end
 
       it 'records journey history' do
@@ -74,22 +57,21 @@ describe OysterCard do
       end
       it 'deducts a penalty charge if user fails to touch in'do
         oystercard.top_up(30)
-        expect {oystercard.touch_out(station)}.to change{oystercard.balance}.by(-16)
+        expect {oystercard.touch_out(station)}.to change{oystercard.balance}.by(-6)
 
       end
       it 'deducts a penalty charge if user fails to touch in on second journey'do
         oystercard.top_up(30)
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
-        expect {oystercard.touch_out(station3)}.to change{oystercard.balance}.by(-16)
+        expect {oystercard.touch_out(station3)}.to change{oystercard.balance}.by(-6)
       end
       it 'doesn\'t change history when you touch out without touching in'do
         oystercard.top_up(30)
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
-        1000000.times{p "time wasting!"}
         oystercard.touch_out(station3)
-        expect(oystercard.full_history).to eq ({oystercard.time=>[station, station2]})
+        expect(oystercard.full_history).to eq ({oystercard.time=>[nil, station3]})
       end
 
     end

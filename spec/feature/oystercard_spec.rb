@@ -24,7 +24,7 @@ describe 'User stories' do
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
     oystercard.touch_out(station3)
-    expect(oystercard.full_history).to eq ({oystercard.time=>[station, station2]})
+    expect(oystercard.full_history).to eq ({oystercard.time=>[nil, station3]})
   end
 
 #  In order to know how far I have travelled
@@ -46,15 +46,4 @@ describe 'User stories' do
     oystercard.touch_in(station)
     expect {oystercard.touch_in(station)}.to change{oystercard.balance}.by(-6)
   end
-
-  it 'checks whether a journey is complete' do
-    oystercard = OysterCard.new
-    station = Station.new
-    oystercard.top_up(50)
-    oystercard.touch_in(station)
-    expect(oystercard.touch_out(station)).to eq "journey complete"
-  end
-
-
-
 end
