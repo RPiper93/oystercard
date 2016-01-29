@@ -9,7 +9,7 @@ class OysterCard
 
   def initialize
     @balance = INITIAL_BALANCE
-    @full_history = {}
+    @full_history = []
     @journey =  Journey.new
   end
 
@@ -21,27 +21,30 @@ class OysterCard
   def touch_in(station)
     fail "Insufficient balance #{MINIMUM}" if minimum
     if !!@journey.entry_station
-      "You didn't check out last time!"
+      p "You didn't check out last time!"
       end_journey
       create_journey
     end
     add_entry_station(station)
-    time
+    #time
   end
 
   def touch_out(station)
-    time if !@journey.entry_station
+    #time if !@journey.entry_station
     add_exit_station(station)
     end_journey
     create_journey
   end
 
-  def time
-    @time = Time.now
-    @journey_time = @time.strftime("Journey date and time: %d/%m/%y  %H:%M:%S")
-  end
+  #def time
+    #@time = Time.now
+    #@journey_time = @time.strftime("Journey date and time: %d/%m/%y  %H:%M:%S")
+  #end
+
+
 
   private
+
 
   def fare
     @journey.fare
@@ -69,7 +72,7 @@ class OysterCard
   end
 
   def write_history
-    @full_history[@journey_time] = @journey.history_log
+    @full_history << @journey.history_log
   end
 
   def add_entry_station(station)

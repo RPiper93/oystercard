@@ -5,7 +5,7 @@ require 'journey'
 # As a customer
 # I want to see to all my previous trips
 
-describe 'User stories' do
+describe 'U' do
   let(:station) {Station.new("liverpool street", 1)}
   let(:station2) { Station.new("Brighton", 10)}
   let(:station3) { Station.new("Victoria", 1)}
@@ -14,15 +14,15 @@ describe 'User stories' do
     oystercard = OysterCard.new
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
-    expect(oystercard.full_history).to eq ({oystercard.time=>[station, station2]})
+    expect(oystercard.full_history).to eq ([[station, station2]])
   end
 
-  it 'doesn\'t change history when you touch out without touching in'do
+  it 'can store more than one journey in history'do
     oystercard = OysterCard.new
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
     oystercard.touch_out(station3)
-    expect(oystercard.full_history).to eq ({oystercard.time=>[nil, station3]})
+    expect(oystercard.full_history).to eq ([[station, station2],[nil, station3]])
   end
 
 #  In order to know how far I have travelled

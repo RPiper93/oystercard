@@ -27,7 +27,7 @@ describe OysterCard do
     let(:station3) {double(zone: 3)}
 
     context 'touch_in' do
-      it 'card has at least £1' do
+      it 'raises an error if card doesn\'t have £1' do
         30.times do
         oystercard.touch_in(station)
         oystercard.touch_out(station)
@@ -46,7 +46,7 @@ describe OysterCard do
       it 'records journey history' do
         oystercard.touch_in(station)
         oystercard.touch_out(station)
-        expect(oystercard.full_history).to eq ({oystercard.time=>[station, station]})
+        expect(oystercard.full_history).to eq ([[station, station]])
       end
 
       it 'deducts a penalty charge if user fails to touch out' do
@@ -66,7 +66,7 @@ describe OysterCard do
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
         oystercard.touch_out(station3)
-        expect(oystercard.full_history).to eq ({oystercard.time=>[nil, station3]})
+        expect(oystercard.full_history[-1]).to eq ([nil, station3])
       end
 
     end
