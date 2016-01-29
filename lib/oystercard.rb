@@ -1,4 +1,3 @@
-require_relative 'journey.rb'
 require_relative 'journeylog.rb'
 
 class OysterCard
@@ -19,12 +18,13 @@ class OysterCard
   end
 
   def touch_in(station)
-    fail "Insufficient balance #{MINIMUM}" if minimum
     if !!current
       p "You didn't check out last time!"
       deduct(fare)
       log.log
+      p balance
     end
+    fail "Insufficient balance #{MINIMUM}" if minimum
     log.start_journey(station)
   end
 
@@ -32,10 +32,11 @@ class OysterCard
     log.exit_journey(station)
     deduct(fare)
     log.log
+    p "Your balance is: #{balance}"
   end
 
   def history
-    log.journeys
+    puts log.journeys
   end
 
   private

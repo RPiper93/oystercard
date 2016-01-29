@@ -1,4 +1,4 @@
-require 'journey.rb'
+require_relative 'journey.rb'
 
 class JourneyLog
   def initialize
@@ -20,7 +20,7 @@ class JourneyLog
   end
 
   def log
-    @journeys << @current_journey
+    @journeys << display
     @current_journey = nil
   end
 
@@ -28,5 +28,17 @@ class JourneyLog
 
   attr_reader :journey_klass
 
-end
+  def display
+    "#{entry_station_name} -> #{exit_station_name}"
+  end
 
+  def entry_station_name
+    return "No Station!" if current_journey.entry_station == nil
+    current_journey.entry_station.name
+  end
+
+  def exit_station_name
+    return "No Station!" if current_journey.exit_station == nil
+    current_journey.exit_station.name
+  end
+end
