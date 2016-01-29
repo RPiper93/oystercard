@@ -14,7 +14,7 @@ describe 'U' do
     oystercard = OysterCard.new
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
-    expect(oystercard.full_history).to eq ([[station, station2]])
+    expect(oystercard.full_history).to eq ([])
   end
 
   it 'can store more than one journey in history'do

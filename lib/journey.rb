@@ -1,4 +1,4 @@
-class Journey < Struct.new :entry_station, :exit_station, :history
+class Journey < Struct.new :entry_station, :exit_station
   PENALTY_FARE = 6
 
   #def in_journey?
@@ -9,13 +9,7 @@ class Journey < Struct.new :entry_station, :exit_station, :history
    complete? ? calculate_fare :  PENALTY_FARE
   end
 
-
-  def history_log
-    self.history = [self.entry_station, self.exit_station]
-  end
-  
   private
-
 
   def complete?
     !!self.entry_station && !!self.exit_station

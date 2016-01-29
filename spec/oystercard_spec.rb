@@ -1,4 +1,6 @@
 require "oystercard.rb"
+require "journeylog.rb"
+
 describe OysterCard do
   subject(:oystercard) {described_class.new}
 
@@ -43,12 +45,6 @@ describe OysterCard do
         expect{oystercard.touch_out(station)}.to change{oystercard.balance}.by(-1)
       end
 
-      it 'records journey history' do
-        oystercard.touch_in(station)
-        oystercard.touch_out(station)
-        expect(oystercard.full_history).to eq ([[station, station]])
-      end
-
       it 'deducts a penalty charge if user fails to touch out' do
         oystercard.touch_in(station)
         expect {oystercard.touch_in(station)}.to change{oystercard.balance}.by(-6)
@@ -61,12 +57,6 @@ describe OysterCard do
         oystercard.touch_in(station)
         oystercard.touch_out(station2)
         expect {oystercard.touch_out(station3)}.to change{oystercard.balance}.by(-6)
-      end
-      it 'doesn\'t change history when you touch out without touching in'do
-        oystercard.touch_in(station)
-        oystercard.touch_out(station2)
-        oystercard.touch_out(station3)
-        expect(oystercard.full_history[-1]).to eq ([nil, station3])
       end
 
     end
