@@ -24,9 +24,9 @@ describe OysterCard do
   end
 
   describe 'journey' do
-    let(:station) {double(zone: 1)}
-    let(:station2) {double(zone: 2)}
-    let(:station3) {double(zone: 3)}
+    let(:station) {double(zone: 1, name: "station")}
+    let(:station2) {double(zone: 2, name: "station2")}
+    let(:station3) {double(zone: 3, name: "station3")}
 
     context 'touch_in' do
       it 'raises an error if card doesn\'t have £1' do

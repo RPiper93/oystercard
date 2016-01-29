@@ -1,13 +1,13 @@
 require 'station'
 
 describe Station do
-  subject(:station) {described_class.new("Liverpool Street", 1)}
-  
+  subject(:station) {described_class.new(1)}
+
   it 'can access its name' do
-    expect(station.name).to eq "Liverpool Street"
+    expect(station.name).to eq Station::STATION_LIST[1][0]
   end
-  
+
   it 'can access its zone' do
-    expect(station.zone).to eq 1
+    expect(station.zone).to eq Station::STATION_LIST[1][1]
   end
 end

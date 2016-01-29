@@ -5,7 +5,7 @@ class OysterCard
   MINIMUM = 1
   INITIAL_BALANCE = 30
 
-  attr_reader :balance, :log
+  attr_reader :balance, :log, :station_list
 
   def initialize
     @balance = INITIAL_BALANCE
