@@ -6,15 +6,16 @@ require 'journey'
 # I want to see to all my previous trips
 
 describe 'U' do
-  let(:station) {Station.new("liverpool street", 1)}
-  let(:station2) { Station.new("Brighton", 10)}
-  let(:station3) { Station.new("Victoria", 1)}
+  let(:station) {Station.new(0)}
+  let(:station2) { Station.new(1)}
+  let(:station3) { Station.new(2)}
   let(:oystercard) {OysterCard.new}
+
   it 'shows all previous trips' do
     oystercard = OysterCard.new
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
-    expect(oystercard.full_history).to eq ([])
+    expect(oystercard.history).to eq (["#{station.name} -> #{station2.name}"])
   end
 
   it 'can store more than one journey in history'do
@@ -22,7 +23,7 @@ describe 'U' do
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
     oystercard.touch_out(station3)
-    expect(oystercard.full_history).to eq ([[station, station2],[nil, station3]])
+    expect(oystercard.history).to eq (["#{station.name} -> #{station2.name}","No Station! -> #{station3.name}"])
   end
 
 #  In order to know how far I have travelled
@@ -30,9 +31,8 @@ describe 'U' do
 #  I want to know what zone a station is in
   it 'knows what zone a station is in' do
     oystercard = OysterCard.new
-    station = Station.new("liverpool street", 1)
-
-    expect(station[:zone]).to eq 1
+    station = Station.new(1)
+    expect(station.zone).to eq Station::STATION_LIST[1][1]
   end
 
 #   In order to be charged correctly

@@ -5,7 +5,7 @@ class OysterCard
   MINIMUM = 1
   INITIAL_BALANCE = 30
 
-  attr_reader :balance, :log, :station_list
+  attr_reader :balance, :log
 
   def initialize
     @balance = INITIAL_BALANCE
@@ -36,7 +36,7 @@ class OysterCard
   end
 
   def history
-    puts log.journeys
+    log.journeys
   end
 
   private
